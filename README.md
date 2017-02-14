@@ -1,6 +1,8 @@
 # CIS194 Exercises and examples
 
-See [Course Website for CIS194 (Fall 16 Version)](http://www.seas.upenn.edu/~cis194/fall16/)
+Exercises from [CIS194 (Fall 16 Version)](http://www.seas.upenn.edu/~cis194/fall16/) and 
+[CIS194 (Fall 16 Version)](http://www.seas.upenn.edu/~cis194/spring13/). Also some notes from
+[Programming Haskell from first principles](http://www.haskellbook.com/)
 
 
 ## Dependencies
@@ -35,7 +37,7 @@ stack repl
 > redLightMain
 ```
 
-If you've changed the source files, then run `:reload` in the repl to get access to updated functions
+If you've changed the source files, then run `:r` in the REPL to get access to updated functions
 
 
 ## Running tests
