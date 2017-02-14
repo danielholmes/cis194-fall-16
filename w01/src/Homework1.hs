@@ -30,12 +30,15 @@ trafficLight :: Bool -> Bool -> Bool -> Picture
 trafficLight redOn amberOn greenOn = redLight redOn & amberLight amberOn &
     greenLight greenOn & frame
 
-trafficLightController :: Double -> Picture
-trafficLightController t
-    | (round t) `mod` 10 < (5 :: Integer) = trafficLight False False True
-    | (round t) `mod` 10 < (6 :: Integer) = trafficLight False True False
-    | (round t) `mod` 10 < (9 :: Integer) = trafficLight True False False
+trafficLightAnimation :: Integer -> Picture
+trafficLightAnimation t
+    | t < 5 = trafficLight False False True
+    | t < 6 = trafficLight False True False
+    | t < 9 = trafficLight True False False
     | otherwise = trafficLight True True False
+
+trafficLightController :: Double -> Picture
+trafficLightController t = trafficLightAnimation (round t `mod` 10)
 
 exercise1 :: IO ()
 exercise1 = animationOf trafficLightController
