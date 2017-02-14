@@ -1,0 +1,63 @@
+# Programming Haskell from first principles
+
+## Basic Expressions and Functions
+
+### REPL
+
+ - Prelude is the name of the base library that includes standard functions + values
+ - `:info funcName` including with operators e.g. `:info *`
+   - example for `*`, `infixl 7` means influx with left association, with 7 precedence (higher it is the earlier it's
+     applied, scale 1-10)
+
+
+### Understanding Expressions
+
+ - Expressions are reducible to their normal form. Normal form is a value like 1 "123" False. Reducible expressions are
+   called "redex". Values are non-reducible expressions
+
+
+### Functions
+
+ - Every function in Haskell takes one argument. Defining a function with multiple arguments can be considered as
+   defining a composition of single argument functions. Fits very naturally with currying + partial application. It's
+   called sectioning. e.g. (+1) is a function - same function as succ
+ - To declare functions in repl: let funcName x = expression
+ - There's an identity function available in base `id`
+ - A parameter represents the value being passed into the function, and argument is the actual input value. e.g. think
+   of the parameter as a kind of pointer
+ - Can be described as a list of sorted pairs of input and output. e.g. for the function double:
+
+     (1, 2)
+     (2, 4)
+     (3, 6)
+     ...
+
+
+### Infix operators
+
+ - Operators are functions that can be used in an infix style. All operators are functions. Some functions are operators
+ - Use brackets to change infix to prefix `(+) 2 3`, use back ticks to turn prefix to infix `6 \`div\` 3`
+ - Must use symbols if function is an operator
+
+
+### Arithmetic functions
+
+ - rem uses same sign as divisor, mod the same as dividend
+ - div and quot also have some differences
+
+
+### Parenthesis
+
+ - $ has lowest precedence so evaluates everything to the right first. It delays function application
+   - Parenthesis can be more verbose but clearer. $ is too idiomatic in Haskell though to just ignore
+
+
+### let and where
+
+ - same function just different ordering:
+
+   let myConst = 12345
+   in myConst * myConst
+
+   myConst * myConst
+   where myConst = 12345
