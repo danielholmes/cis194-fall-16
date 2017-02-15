@@ -1,5 +1,5 @@
 module Spring13Homework2 (
-    hanoi, hanoi4, performMoves, startPositions, boardToStr, largestDisk
+    hanoi, hanoi4, performMoves, startPositions, Disk, HanoiBoard, NumDisks, PopulatedPeg
 ) where
 
 import Data.List
@@ -10,16 +10,6 @@ type NumDisks = Integer
 type Disk = Integer
 type PopulatedPeg = (Peg, [Disk])
 type HanoiBoard = [PopulatedPeg]
-
-findPegs :: [Move] -> [Peg]
-findPegs ms = sort (nub ((map (fst) ms) ++ (map (snd) ms)))
-
-pegWidth :: NumDisks -> Integer
-pegWidth 0 = 3
-pegWidth n = (diskWidth n) + 2
-
-diskWidth :: Disk -> Integer
-diskWidth d = (1 + d * 2)
 
 startPositions :: NumDisks -> [Peg] -> HanoiBoard
 startPositions _ [] = []
@@ -43,55 +33,15 @@ takeDisk (p:ps) from
     | otherwise = let (pegs, found) = takeDisk ps from
                   in (p : pegs, found)
 
+findPegs :: [Move] -> [Peg]
+findPegs ms = sort (nub ((map (fst) ms) ++ (map (snd) ms)))
+
 performAllMoves :: HanoiBoard -> [Move] -> HanoiBoard
 performAllMoves p [] = p
 performAllMoves p (m:ms) = performAllMoves (performMove p m) ms
 
 performMoves :: NumDisks -> [Move] -> HanoiBoard
 performMoves n ms = performAllMoves (startPositions n (findPegs ms)) ms
-
-boardToStr :: HanoiBoard -> String
-boardToStr [] = ""
-boardToStr b
-    | (concat (map snd b)) == [] = baseRow (pegWidth 0)
-    | otherwise = intercalate "\n" (boardToStrs (largestDisk b) b)
-
-boardToStrs :: Disk -> HanoiBoard -> [String]
-boardToStrs _ [] = []
-boardToStrs d b = let (p:ps) = b in joinElementWise (pegToStr d p) (boardToStrs d ps)
-
-joinElementWise :: [String] -> [String] -> [String]
-joinElementWise [] [] = []
-joinElementWise (x:xs) [] = x : joinElementWise xs []
-joinElementWise [] (y:ys) = y : joinElementWise [] ys
-joinElementWise (x:xs) (y:ys) = (x ++ y) : joinElementWise xs ys
-
-pegToStr :: Disk -> PopulatedPeg -> [String]
-pegToStr d p = pegToRowStr (d+1) (pegWidth d) p
-
-pegToRowStr :: Integer -> Integer -> PopulatedPeg -> [String]
-pegToRowStr 0 w p = [baseRow w]
-pegToRowStr n w p = pegRowToStr n w (snd p) : (pegToRowStr (n-1) w p)
-
-pegRowToStr :: Integer -> Integer -> [Disk] -> String
-pegRowToStr n w ds
-    | n <= fromIntegral (length ds) = diskRow (ds !! fromIntegral ((fromIntegral (length ds)) - n)) w
-    | otherwise = emptyRow w
-
-baseRow :: Integer -> String
-baseRow w = ' ' : (replicate (fromIntegral (w-2)) 'X') ++ " "
-
-emptyRow :: Integer -> String
-emptyRow w = let halfW = w `div` 2; empty = replicate (fromIntegral halfW) ' '
-             in empty ++ "|" ++ empty
-
-diskRow :: Disk -> Integer -> String
-diskRow d w = let dw = diskWidth d; numEmpty = ((w - dw) `div` 2); empty = replicate (fromIntegral numEmpty) ' '
-              in empty ++ (replicate (fromIntegral dw) '-') ++ empty
-
-largestDisk :: HanoiBoard -> Disk
-largestDisk [] = error "No disks"
-largestDisk b = maximum (concat (map snd b))
 
 hanoi :: NumDisks -> Peg -> Peg -> Peg -> [Move]
 hanoi n a b c

@@ -1,6 +1,7 @@
 import Test.HUnit
 import Spring13Homework1
 import Spring13Homework2
+import HanoiDisplay
 
 -- Credit Card
 test1 = TestCase (assertEqual "for (toDigits 0)" [] (toDigits 0))
