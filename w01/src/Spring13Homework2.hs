@@ -52,17 +52,31 @@ performMoves n ms = performAllMoves (startPositions n (findPegs ms)) ms
 
 boardToStr :: HanoiBoard -> String
 boardToStr [] = ""
-boardToStr b = let (p:ps) = b
-               in if (concat (map snd b)) == [] then baseRow (pegWidth 0) else intercalate "\n" (pegToStr (largestDisk b) p)
+boardToStr b
+    | (concat (map snd b)) == [] = baseRow (pegWidth 0)
+    | otherwise = intercalate "\n" (boardToStrs (largestDisk b) b)
+
+boardToStrs :: Disk -> HanoiBoard -> [String]
+boardToStrs _ [] = []
+boardToStrs d b = let (p:ps) = b in joinElementWise (pegToStr d p) (boardToStrs d ps)
+
+joinElementWise :: [String] -> [String] -> [String]
+joinElementWise [] [] = []
+joinElementWise (x:xs) [] = x : joinElementWise xs []
+joinElementWise [] (y:ys) = y : joinElementWise [] ys
+joinElementWise (x:xs) (y:ys) = (x ++ y) : joinElementWise xs ys
 
 pegToStr :: Disk -> PopulatedPeg -> [String]
 pegToStr d p = pegToRowStr (d+1) (pegWidth d) p
 
 pegToRowStr :: Integer -> Integer -> PopulatedPeg -> [String]
 pegToRowStr 0 w p = [baseRow w]
-pegToRowStr n w p = let (pn,ds) = p
-                    in [if n <= fromIntegral (length ds) then diskRow (ds !! fromIntegral ((fromIntegral (length ds)) - n)) w else emptyRow w] ++
-                        (pegToRowStr (n-1) w p)
+pegToRowStr n w p = pegRowToStr n w (snd p) : (pegToRowStr (n-1) w p)
+
+pegRowToStr :: Integer -> Integer -> [Disk] -> String
+pegRowToStr n w ds
+    | n <= fromIntegral (length ds) = diskRow (ds !! fromIntegral ((fromIntegral (length ds)) - n)) w
+    | otherwise = emptyRow w
 
 baseRow :: Integer -> String
 baseRow w = ' ' : (replicate (fromIntegral (w-2)) 'X') ++ " "

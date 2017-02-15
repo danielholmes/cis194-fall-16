@@ -87,6 +87,7 @@ hdTest8 = TestCase (assertEqual "for (boardToStr [])" "" (boardToStr []))
 hdTest9 = TestCase (assertEqual "for (boardToStr [(\"a\", [])])" " X " (boardToStr [("a", [])]))
 hdTest10 = TestCase (assertEqual "for (boardToStr [(\"a\", [0])])" " - \n X " (boardToStr [("a", [0])]))
 hdTest11 = TestCase (assertEqual "for (boardToStr [(\"a\", [0,1])])" "  -  \n --- \n XXX " (boardToStr [("a", [0,1])]))
+hdTest12 = TestCase (assertEqual "for (boardToStr [(\"a\", [0]), (a, [1])])" "  |    |  \n  -   --- \n XXX  XXX " (boardToStr [("a", [0]), ("b", [1])]))
 
 tests4 = [
     TestLabel "hdTest1" hdTest1,
@@ -99,7 +100,8 @@ tests4 = [
     TestLabel "hdTest8" hdTest8,
     TestLabel "hdTest9" hdTest9,
     TestLabel "hdTest10" hdTest10,
-    TestLabel "hdTest11" hdTest11]
+    TestLabel "hdTest11" hdTest11,
+    TestLabel "hdTest12" hdTest12]
 
 main :: IO Counts
 main = runTestTT (TestList (tests1 ++ tests2 ++ tests3 ++ tests4))
