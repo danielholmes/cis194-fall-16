@@ -34,7 +34,7 @@ pegToStr :: Disk -> PopulatedPeg -> [String]
 pegToStr d p = pegToRowStr (d+1) (pegWidth d) p
 
 pegToRowStr :: Integer -> Integer -> PopulatedPeg -> [String]
-pegToRowStr 0 w p = [baseRow w]
+pegToRowStr 0 w _ = [baseRow w]
 pegToRowStr n w p = pegRowToStr n w (snd p) : (pegToRowStr (n-1) w p)
 
 pegRowToStr :: Integer -> Integer -> [Disk] -> String
