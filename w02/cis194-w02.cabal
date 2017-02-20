@@ -1,0 +1,43 @@
+name:                cis194-w02
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/githubuser/cis194-w02#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Daniel Holmes
+maintainer:          daniel@danielholmes.org
+copyright:           2017 Daniel Holmes
+category:            Web
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Lecture
+                     , Homework1
+  build-depends:       base >= 4.7 && < 5
+                     , codeworld-api == 0.2.0.0
+  default-language:    Haskell2010
+
+executable w02-exe
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , cis194-w02
+  default-language:    Haskell2010
+
+test-suite w02-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , cis194-w02
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/githubuser/cis194-w02
