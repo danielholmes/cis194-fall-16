@@ -69,9 +69,9 @@ maze (C x y)
     | otherwise                = Ground
 
 drawTileAt :: Coord -> Picture
-drawTileAt (C x y)
+drawTileAt c@(C x y)
     | y < -10 || y > 10 || x < -10 || x > 10 = blank
-    | otherwise = atCoord (C x y) (drawTile (maze (C x y)))
+    | otherwise = atCoord c (drawTile (maze c))
 
 handleTime :: Double -> Coord -> Coord
 handleTime _ c = c
