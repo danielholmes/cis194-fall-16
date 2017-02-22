@@ -1,8 +1,6 @@
 # CIS194 Exercises and examples
 
-Exercises from [CIS194 (Fall 16)](http://www.seas.upenn.edu/~cis194/fall16/) and 
-[CIS194 (Spring 13)](http://www.seas.upenn.edu/~cis194/spring13/). Also some notes from
-[Programming Haskell from first principles](http://www.haskellbook.com/)
+Exercises from [CIS194 (Fall 16)](http://www.seas.upenn.edu/~cis194/fall16/). 
 
 
 ## Dependencies
