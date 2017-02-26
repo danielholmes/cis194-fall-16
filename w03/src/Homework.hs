@@ -19,8 +19,7 @@ combine (Entry p ps) = p & combine ps
 
 appendList :: List a -> List a -> List a
 appendList Empty list = list
-appendList (Entry e Empty) list = Entry e list
-appendList (Entry e next) list = appendList next list
+appendList (Entry e next) list = Entry e (appendList next list)
 
 containsList :: Eq a => a -> List a -> Bool
 containsList _ Empty = False
@@ -28,9 +27,9 @@ containsList i (Entry x xs) = x == i || containsList i xs
 
 replaceList :: Eq a => a -> a -> List a -> List a
 replaceList _ _ Empty = error "Not found"
-replaceList find replace (Entry x xs) =
-    if find == x then Entry replace xs
-    else Entry x (replaceList find replace xs)
+replaceList from to (Entry x xs) =
+    if from == x then Entry to xs
+    else Entry x (replaceList from to xs)
 
 allList :: List Bool -> Bool
 allList Empty = True
@@ -134,13 +133,13 @@ tryPlayerMove s@(State pos _ bCoords) dir
     where
         propCoord = adjacentCoord dir pos
         propTile = noBoxMaze propCoord
-        nextPropCoord = adjacentCoord dir propCoord
 
 handleKeyPress :: Text -> State -> State
 handleKeyPress "Right" s = tryPlayerMove s R
 handleKeyPress "Up" s = tryPlayerMove s U
 handleKeyPress "Left" s = tryPlayerMove s L
 handleKeyPress "Down" s = tryPlayerMove s D
+handleKeyPress _ s = s
 
 handleEvent :: Event -> State -> State
 handleEvent e s

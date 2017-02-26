@@ -17,9 +17,6 @@ data Interaction world = Interaction
     (Event -> world -> world)
     (world -> Picture)
 
-initialCoord :: Coord
-initialCoord = C 0 0
-
 atCoord :: Coord -> Picture -> Picture
 atCoord (C x y) pic = translated (fromIntegral x) (fromIntegral y) pic
 
@@ -30,9 +27,9 @@ adjacentCoord L (C x y) = C (x-1) y
 adjacentCoord D (C x y) = C  x   (y-1)
 
 player :: Picture
-player = head & body & leftLeg & rightLeg & arms
+player = playerHead & body & leftLeg & rightLeg & arms
     where
-        head = translated 0 0.15 (solidCircle 0.15)
+        playerHead = translated 0 0.15 (solidCircle 0.15)
         arms = path [(-0.2, -0.1), (0.2, -0.1)]
         body = path [(0, 0.2), (0, -0.2)]
         leftLeg = path [(0, -0.2), (-0.2, -0.4)]
@@ -87,7 +84,7 @@ adjacentMovableCoord d c = movableOrFallback proposed (maze proposed) c
         movableOrFallback :: Coord -> Tile -> Coord -> Coord
         movableOrFallback p Ground _ = p
         movableOrFallback p Storage _ = p
-        movableOrFallback _ _ c = c
+        movableOrFallback _ _ f = f
         proposed = adjacentCoord d c
 
 directionalPlayer :: Direction -> Picture
