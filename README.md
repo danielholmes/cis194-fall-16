@@ -45,5 +45,3 @@ Within a week directory after setup:
 ```
 stack test
 ```
-
-Note that the return code from the execution will be success even if there are failures. TODO: Find a solution
