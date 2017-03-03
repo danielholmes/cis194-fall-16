@@ -15,10 +15,17 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Exercise1
+                     , Exercise2
+                     , Exercise3
+                     , Exercise4
+                     , List
+                     , Mazes
+                     , Sokoban
   build-depends:       base >= 4.7 && < 5
+                     , codeworld-api == 0.2.0.0
   default-language:    Haskell2010
 
-executable cis194-w04-exe
+executable main
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
@@ -26,7 +33,7 @@ executable cis194-w04-exe
                      , cis194-w04
   default-language:    Haskell2010
 
-test-suite cis194-w04-test
+test-suite test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs

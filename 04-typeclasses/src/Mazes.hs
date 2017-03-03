@@ -1,4 +1,20 @@
-data Maze = Maze Coord (Coord -> Tile) 
+module Mazes where
+
+import List
+
+data Coord = C Integer Integer deriving (Show, Eq)
+
+data Direction = R | U | L | D deriving (Show, Eq)
+
+data Tile = Wall | Ground | Storage | Box | Blank deriving (Show, Eq)
+
+data Maze = Maze Coord (Coord -> Tile)
+
+offsetCoord :: Coord -> Direction -> Coord
+offsetCoord (C x y) U = C x (y+1)
+offsetCoord (C x y) D = C x (y-1)
+offsetCoord (C x y) L = C (x-1) y
+offsetCoord (C x y) R = C (x+1) y
 
 mazes :: List Maze
 mazes =
@@ -239,3 +255,11 @@ maze9' :: Coord -> Tile
 maze9' (C 3 0) = Box
 maze9' (C 4 0) = Box
 maze9'  c      = maze9 c
+
+-- Testing utils
+tileAtOriginOtherwise :: Tile -> Tile -> (Coord -> Tile)
+tileAtOriginOtherwise t _ (C 0 0) = t
+tileAtOriginOtherwise _ d _ = d
+
+tileAtOriginOtherwiseWall :: Tile -> (Coord -> Tile)
+tileAtOriginOtherwiseWall t = tileAtOriginOtherwise t Wall

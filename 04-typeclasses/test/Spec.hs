@@ -1,6 +1,10 @@
 import Test.Hspec
 import Control.Exception
+import List
 import Exercise1
+import Exercise2
+import Exercise3
+import Mazes
 
 main :: IO ()
 main = hspec $ do
@@ -55,3 +59,50 @@ main = hspec $ do
 
         it "returns last element" $
             nth (Entry 'a' . Entry 'b' . Entry 'c' $ Empty) 3 `shouldBe` 'c'
+
+    describe "isGraphClosed" $ do
+        it "returns false for always false" $
+            isGraphClosed 1 (const Empty) (const False) `shouldBe` False
+
+        it "returns true for initial true" $
+            isGraphClosed 1 (const Empty) (==1) `shouldBe` True
+
+        it "returns true for all true" $
+            isGraphClosed 3 (const (Entry 3 (Entry 3 Empty))) (==3) `shouldBe` True
+
+        it "returns true for adjacent false" $
+            isGraphClosed 1 (const (Entry 2 (Entry 3 Empty))) (==1) `shouldBe` False
+
+    describe "allAdjacent" $ do
+        it "returns correct" $
+            allAdjacent (C 0 0) `shouldBe` (Entry (C 0 1) (Entry (C 0 (-1)) (Entry (C (-1) 0) (Entry (C 1 0) Empty))))
+
+    describe "adjacentNonWalls" $ do
+        it "returns correct for no walls" $
+            adjacentNonWalls (const Wall) (C 0 0) `shouldBe` Empty
+
+    describe "isWalkableCoord" $ do
+        it "returns false for blank" $
+            isWalkableCoord (tileAtOriginOtherwise Storage Blank) (C 5 5) `shouldBe` False
+
+        it "returns true for storage" $
+            isWalkableCoord (tileAtOriginOtherwise Storage Storage) (C 5 5) `shouldBe` True
+
+    describe "isClosed" $ do
+        it "returns false for initial being a box" $
+            isClosed (Maze (C 0 0) (tileAtOriginOtherwiseWall Box)) `shouldBe` False
+
+        it "returns true for initial being a storage" $
+            isClosed (Maze (C 0 0) (tileAtOriginOtherwiseWall Storage)) `shouldBe` True
+
+        it "returns true for initial being a ground" $
+            isClosed (Maze (C 0 0) (tileAtOriginOtherwiseWall Ground)) `shouldBe` True
+
+        it "returns true for initial being a ground" $
+            isClosed (Maze (C 0 0) (tileAtOriginOtherwiseWall Ground)) `shouldBe` True
+
+        it "returns true for maze3" $
+            isClosed (Maze (C (-4) 3) maze3) `shouldBe` True
+
+        it "returns false for blank" $
+            isClosed (Maze (C 0 0) (tileAtOriginOtherwise Storage Blank)) `shouldBe` False

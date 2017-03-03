@@ -1,6 +1,6 @@
 module Exercise1 where
 
-data List a = Empty | Entry a (List a) deriving (Eq, Show)
+import List
 
 elemList :: Eq a => a -> List a -> Bool
 elemList y (Entry x xs) = y == x || elemList y xs
@@ -13,13 +13,13 @@ appendList (Entry x xs) y = Entry x (appendList xs y)
 
 listLength :: List a -> Integer
 listLength Empty = 0
-listLength (Entry x xs) = 1 + listLength xs
+listLength (Entry _ xs) = 1 + listLength xs
 
 filterList :: (a -> Bool) -> List a -> List a
 filterList _ Empty = Empty
-filterList pred (Entry x xs)
-    | pred x = Entry x (filterList pred xs)
-    | otherwise = filterList pred xs
+filterList p (Entry x xs)
+    | p x = Entry x (filterList p xs)
+    | otherwise = filterList p xs
 
 nth :: List a -> Integer -> a
 nth Empty _ = error "list too short"
