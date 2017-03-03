@@ -20,7 +20,6 @@ library
                      , Exercise4
                      , List
                      , Mazes
-                     , Sokoban
   build-depends:       base >= 4.7 && < 5
                      , codeworld-api == 0.2.0.0
   default-language:    Haskell2010
