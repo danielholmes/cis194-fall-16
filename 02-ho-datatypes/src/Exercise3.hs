@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Homework3 (exercise3) where
+module Exercise3 (exercise3) where
 
 import CodeWorld
-import Homework1
-import Homework2
+import Exercise1
+import Exercise2
 
 resetableInteractionOf ::
     world ->

@@ -1,4 +1,4 @@
-module Homework1 (
+module Exercise1 (
     exercise1
 ) where
 

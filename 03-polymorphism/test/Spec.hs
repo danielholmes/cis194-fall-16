@@ -1,6 +1,6 @@
 import Test.Hspec
 --import Control.Exception (evaluate)
-import Homework
+import Exercise
 
 main :: IO ()
 main = hspec $ do

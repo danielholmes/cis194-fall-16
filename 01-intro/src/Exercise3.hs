@@ -1,4 +1,4 @@
-module Homework3 (exercise3) where
+module Exercise3 (exercise3) where
 
 import CodeWorld
 

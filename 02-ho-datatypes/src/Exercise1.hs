@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Homework1 (exercise1, adjacentMovableCoord, player, atCoord, pictureOfMaze, Coord (C), Direction (U, R, L, D), Tile) where
+module Exercise1 (exercise1, adjacentMovableCoord, player, atCoord, pictureOfMaze, Coord (C), Direction (U, R, L, D), Tile) where
 
 import CodeWorld
 

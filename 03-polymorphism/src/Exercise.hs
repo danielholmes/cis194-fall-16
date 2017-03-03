@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Homework where
+module Exercise where
 
 import CodeWorld
 --import Debug.Trace

@@ -13,7 +13,7 @@ Exercises from [CIS194 (Fall 16)](http://www.seas.upenn.edu/~cis194/fall16/).
 Each week is managed separately. Before using that week's code run:
 
 ```
-cd w01
+cd 01-intro
 stack setup
 ```
 

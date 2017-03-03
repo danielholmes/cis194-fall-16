@@ -1,8 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Homework2 (exercise2, handleTime2, handleEvent2, drawState2) where
+module Exercise2 (exercise2, handleTime2, handleEvent2, drawState2) where
 
 import CodeWorld
-import Homework1
+import Exercise1
 
 player2 :: Direction -> Picture
 player2 U = rotated pi player
