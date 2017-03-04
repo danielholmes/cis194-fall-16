@@ -54,11 +54,11 @@ isOnStorage :: MazeMap -> Coord -> Bool
 isOnStorage mazeMap c = case mazeMap c of Storage -> True
                                           _       -> False
 
-gameWon :: State -> List Coord -> Bool
-gameWon (State l _ _ _) cs = l == listLength mazes && levelWon (nthMazeMap l) cs
+gameWon :: State -> Bool
+gameWon (State l _ _ cs) = l == listLength mazes && levelWon (nthMazeMap l) cs
 
-nonLastLevelWon :: State -> List Coord -> Bool
-nonLastLevelWon (State l _ _ _) cs = l < listLength mazes && levelWon (nthMazeMap l) cs
+nonLastLevelWon :: State -> Bool
+nonLastLevelWon (State l _ _ cs) = l < listLength mazes && levelWon (nthMazeMap l) cs
 
 levelWon :: MazeMap -> List Coord -> Bool
 levelWon m cs = allList (mapList (isOnStorage m) cs)
@@ -89,8 +89,7 @@ initialState :: State
 initialState = loadLevel 1
 
 loadLevel :: Integer -> State
-loadLevel n = State n (C 0 1) R (initialBoxes mazeMap)
-                where (Maze s mazeMap) = nthMaze n
+loadLevel n = State n (C 0 1) R (initialBoxes (nthMazeMap n))
 
 -- Event handling
 
@@ -113,9 +112,10 @@ tryGoTo (State level from _ bx) d
         m = nthMazeMap level
 
 handleEvent :: Event -> State -> State
-handleEvent _ s@(State _ _ _ bx)
-    | gameWon s bx = s
-handleEvent (KeyPress key) s
+handleEvent _ s
+    | gameWon s = s
+handleEvent (KeyPress key) s@(State level _ _ _)
+    | nonLastLevelWon s && key == " " = loadLevel (level+1)
     | key == "Right" = tryGoTo s R
     | key == "Up"    = tryGoTo s U
     | key == "Left"  = tryGoTo s L
@@ -183,21 +183,21 @@ player D = translated 0 0.3 cranium
                 & translated (-0.06) 0.08 (solidCircle 0.04)
 
 
-showWin :: State -> List Coord -> Picture
-showWin s cs | gameWon s cs = scaled 2 2 (text "You won!")
-             | otherwise    = blank
+showWin :: State -> Picture
+showWin s | gameWon s = scaled 2 2 (text "You won!")
+          | otherwise = blank
 
-showLevelDone :: State -> List Coord -> Picture
-showLevelDone s cs | nonLastLevelWon s cs = scaled 2 2 (text "Level done!")
-                   | otherwise            = blank
+showLevelDone :: State -> Picture
+showLevelDone s | nonLastLevelWon s = scaled 2 2 (text "Level done!")
+                | otherwise         = blank
 
 pictureOfBoxes :: List Coord -> Picture
 pictureOfBoxes cs = combine (mapList (\c -> atCoord c (drawTile Box)) cs)
 
 drawState :: State -> Picture
 drawState s@(State level c d boxes)
-  = showWin s boxes
-  & showLevelDone s boxes
+  = showWin s
+  & showLevelDone s
   & atCoord c (player d)
   & pictureOfBoxes boxes
   & pictureOfMaze (nthMazeMap level)

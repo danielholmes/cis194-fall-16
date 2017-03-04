@@ -20,12 +20,12 @@ mazes :: List Maze
 mazes =
   Entry (Maze (C 1 1)       maze9) $
   Entry (Maze (C 0 0)       maze8) $
-  Entry (Maze (C (-3) 3)    maze7) $
+  {-Entry (Maze (C (-3) 3)    maze7) $
   Entry (Maze (C (-2) 4)    maze6) $
   Entry (Maze (C 0 1)       maze5) $
   Entry (Maze (C 1 (-3))    maze4) $
   Entry (Maze (C (-4) 3)    maze3) $
-  Entry (Maze (C 0 1)       maze1) $
+  Entry (Maze (C 0 1)       maze1) $-}
   Empty
   
 extraMazes :: List Maze
